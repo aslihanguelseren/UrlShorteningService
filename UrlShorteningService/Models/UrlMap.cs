@@ -6,17 +6,16 @@ namespace UrlShorteningService.Models
     public class UrlMap
     {
             [Key]
-            public int Id { get; set; } // Primary key
+            public int Id { get; set; }
 
             [Required]
             [Url]
-            public string OriginalUrl { get; set; } // Store the original URL
+            public string OriginalUrl { get; set; }
 
             [Required]
-            public string ShortUrl { get; set; } // Store the shortened URL
+            public string ShortUrl { get; set; }
 
-            // Optionally, add a creation date
-            public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         }
     
 

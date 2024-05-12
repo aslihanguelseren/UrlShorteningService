@@ -76,25 +76,26 @@ namespace UrlShorteningService.Controllers
                 return NotFound("Short URL not found.");
             }
 
-            return Redirect(urlMap.OriginalUrl);
+            return Ok(urlMap.OriginalUrl);
         }
-
         [HttpPost("custom")]
-        public async Task<ActionResult> CreateCustomUrl([FromBody] UrlMap urlMap)
+        public async Task<IActionResult> CreateCustomShortUrl([FromBody] CustomerUrlRequest request)
         {
-            if (!Uri.TryCreate(urlMap.OriginalUrl, UriKind.Absolute, out Uri _))
+            if (!Uri.TryCreate(request.OriginalUrl, UriKind.Absolute, out Uri validatedUrl))
+            {
                 return BadRequest("Invalid URL format.");
+            }
 
-            if (await _context.UrlMaps.AnyAsync(u => u.ShortUrl == urlMap.ShortUrl))
-                return BadRequest("This short URL is already in use.");
+            if (await _context.UrlMaps.AnyAsync(u => u.ShortUrl == request.CustomShortUrl))
+            {
+                return Conflict("This custom short URL is already in use.");
+            }
 
-            _context.UrlMaps.Add(urlMap);
+            _context.UrlMaps.Add(new UrlMap { OriginalUrl = request.OriginalUrl, ShortUrl = request.CustomShortUrl });
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetOriginalUrl", new { shortUrl = urlMap.ShortUrl }, urlMap);
+            string newShortUrl = $"{Request.Scheme}://{Request.Host}/{request.CustomShortUrl}";
+            return Created(newShortUrl, new { ShortUrl = newShortUrl });
         }
-
-
-
     }
 }
