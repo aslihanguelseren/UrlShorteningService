@@ -26,9 +26,6 @@ namespace UrlShorteningService.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("CustomShortUrl")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("OriginalUrl")
                         .IsRequired()
                         .HasColumnType("TEXT");

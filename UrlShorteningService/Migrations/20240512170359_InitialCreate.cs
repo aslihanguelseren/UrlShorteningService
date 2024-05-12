@@ -10,19 +10,19 @@ namespace UrlShorteningService.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
+            migrationBuilder.DropColumn(
                 name: "CustomShortUrl",
-                table: "UrlMaps",
-                type: "TEXT",
-                nullable: true);
+                table: "UrlMaps");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
+            migrationBuilder.AddColumn<string>(
                 name: "CustomShortUrl",
-                table: "UrlMaps");
+                table: "UrlMaps",
+                type: "TEXT",
+                nullable: true);
         }
     }
 }

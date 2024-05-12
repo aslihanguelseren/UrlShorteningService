@@ -11,7 +11,7 @@ using UrlShorteningService.DbContexts;
 namespace UrlShorteningService.Migrations
 {
     [DbContext(typeof(UrlShortenerContext))]
-    [Migration("20240512160753_InitialCreate")]
+    [Migration("20240512170359_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -27,9 +27,6 @@ namespace UrlShorteningService.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("CustomShortUrl")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("OriginalUrl")
